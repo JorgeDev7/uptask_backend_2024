@@ -1,9 +1,30 @@
 import type { Request, Response } from "express";
+import colors from 'colors';
+
+import Project from "../models/project";
 
 export class ProjectController {
 
+    static createProject = async (req: Request, res: Response) => {
+
+        const project = new Project(req.body);
+
+        try {
+            await project.save();
+            res.send('Projecto Creado Correctamente');
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     static getAllProject = async (req: Request, res: Response) => {
-        res.send('Todos los projecto');
+
+        try {
+            const projects = await Project.find({});
+            res.json(projects);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
 }
