@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 
-import Project from "../models/project";
+import Project from "../models/Project";
 
 export class ProjectController {
 
