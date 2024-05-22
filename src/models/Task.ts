@@ -33,7 +33,7 @@ export const TaskSchema: Schema = new Schema({
         ref: 'Project'
     },
     status: {
-        types: String,
+        type: String,
         enum: Object.values(taskStatus),
         default: taskStatus.PENDING
     }
