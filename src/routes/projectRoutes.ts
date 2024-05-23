@@ -52,10 +52,10 @@ router.delete('/:id',
 
 
 // * Routes for tasks
+// Validates the param on an endpoint, callback => function tha validates
+router.param('projectId', validateProjectExists);
+
 router.post('/:projectId/tasks',
-
-    validateProjectExists,
-
     body('name')
         .notEmpty().withMessage('Task Name is required'),
 
