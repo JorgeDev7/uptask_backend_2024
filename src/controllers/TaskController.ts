@@ -18,7 +18,23 @@ export class TaskController {
             res.send('Task created successfully');
 
         } catch (error) {
-            console.log(error);
+            res.status(500).json({
+                error: 'An error occurred'
+            });
+        }
+    };
+
+    static getProjectsTasks = async (req: Request, res: Response) => {
+        try {
+            const tasks = await Task.find({
+                project: req.project.id
+            }).populate('project'); //value on the model;
+
+            res.json(tasks);
+        } catch (error) {
+            res.status(500).json({
+                error: 'An error occurred'
+            });
         }
     };
 }
