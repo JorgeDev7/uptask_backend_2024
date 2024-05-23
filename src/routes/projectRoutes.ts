@@ -24,13 +24,13 @@ router.post('/',
 );
 router.get('/', ProjectController.getAllProject);
 router.get('/:id',
-    param('id').isMongoId().withMessage('ID no válido'),
+    param('id').isMongoId().withMessage('Invalid ID'),
     handleInputErrors,
     ProjectController.getProjectById
 );
 
 router.put('/:id',
-    param('id').isMongoId().withMessage('ID no válido'),
+    param('id').isMongoId().withMessage('Invalid ID'),
     body('projectName')
         .notEmpty().withMessage('Project Name is required'),
 
