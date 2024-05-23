@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { body, param } from 'express-validator';
 import { handleInputErrors } from '../middleware/validation';
-import { validateProjectExists } from '../middleware/project';
+import { projectExists } from '../middleware/project';
 import { ProjectController } from '../controllers/ProjectController';
 import { TaskController } from '../controllers/TaskController';
 
@@ -53,7 +53,7 @@ router.delete('/:id',
 
 // * Routes for tasks
 // Validates the param on an endpoint, callback => function tha validates
-router.param('projectId', validateProjectExists);
+router.param('projectId', projectExists);
 
 router.post('/:projectId/tasks',
     body('name')
