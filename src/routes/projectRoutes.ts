@@ -70,10 +70,21 @@ router.post('/:projectId/tasks',
 router.get('/:projectId/tasks', TaskController.getProjectsTasks);
 
 router.get('/:projectId/tasks/:taskId',
-
     param('taskId').isMongoId().withMessage('Invalid ID'),
     handleInputErrors,
     TaskController.getTaskById
+);
+
+router.put('/:projectId/tasks/:taskId',
+
+    param('taskId').isMongoId().withMessage('Invalid ID'),
+    body('name')
+        .notEmpty().withMessage('Task Name is required'),
+
+    body('description')
+        .notEmpty().withMessage('Description is required'),
+    handleInputErrors,
+    TaskController.updateTask
 );
 
 export default router;
