@@ -28,3 +28,13 @@ export async function taskExists(req: Request, res: Response, next: NextFunction
         });
     }
 }
+
+export async function taskBelongsToProject(req: Request, res: Response, next: NextFunction) {
+    if (req.task.project.toString() !== req.project.id.toString()) {
+        const error = new Error('Invalid action');
+        return res.status(400).json({
+            error: error.message
+        });
+    }
+    next();
+}
