@@ -69,7 +69,7 @@ export class TaskController {
     static updateTask = async (req: Request, res: Response) => {
         try {
             const { taskId } = req.params;
-            const task = await Task.findByIdAndUpdate(taskId, req.body);
+            const task = await Task.findById(taskId);
 
             if (!task) {
                 const error = new Error('Task not found');
@@ -83,6 +83,13 @@ export class TaskController {
                     error: error.message
                 });
             }
+
+            // adding updated data
+            task.name = req.body.name;
+            task.description = req.body.description;
+
+            // save changes
+            await task.save();
 
             res.send('Tasks updated successfully');
 
