@@ -1,6 +1,7 @@
 import express, { json } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import morgan from 'morgan';
 import { corsConfig } from './config/cors';
 import { connectDB } from './config/db';
 import projectRoutes from './routes/projectRoutes';
@@ -13,7 +14,10 @@ const app = express();
 // CORS
 app.use(cors(corsConfig));
 
-// Enabling JSON
+// Logging
+app.use(morgan('dev'));
+
+// Enabling JSON to read forms
 app.use(json());
 
 // Routes
