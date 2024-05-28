@@ -15,11 +15,11 @@ export class TaskController {
 
             await Promise.allSettled([task.save(), project.save()]);
 
-            res.send('Task created successfully');
+            res.send('Tarea creada correctamente');
 
         } catch (error) {
             res.status(500).json({
-                error: 'An error occurred'
+                error: 'Ocurrió un error'
             });
         }
     };
@@ -33,7 +33,7 @@ export class TaskController {
             res.json(tasks);
         } catch (error) {
             res.status(500).json({
-                error: 'An error occurred'
+                error: 'Ocurrió un error'
             });
         }
     };
@@ -46,7 +46,7 @@ export class TaskController {
 
         } catch (error) {
             res.status(500).json({
-                error: 'An error occurred'
+                error: 'Ocurrió un error'
             });
         }
     };
@@ -60,11 +60,11 @@ export class TaskController {
             // save changes
             await req.task.save();
 
-            res.send('Tasks updated successfully');
+            res.send('Tarea actualizada correctamente');
 
         } catch (error) {
             res.status(500).json({
-                error: 'An error occurred'
+                error: 'Ocurrió un error'
             });
         }
     };
@@ -74,11 +74,11 @@ export class TaskController {
             req.project.tasks = req.project.tasks.filter(task => task.toString() !== req.task.id.toString());
             await Promise.allSettled([req.task.deleteOne(), req.project.save()]);
 
-            res.send('Tasks Deleted successfully');
+            res.send('Tarea eliminada');
 
         } catch (error) {
             res.status(500).json({
-                error: 'An error occurred'
+                error: 'Ocurrió un error'
             });
         }
     };
@@ -90,11 +90,11 @@ export class TaskController {
             req.task.status = status;
             await req.task.save();
 
-            res.send('Status Updated');
+            res.send('Estado actualizado');
 
         } catch (error) {
             res.status(500).json({
-                error: 'An error occurred'
+                error: 'Ocurrió un error'
             });
         }
     };
