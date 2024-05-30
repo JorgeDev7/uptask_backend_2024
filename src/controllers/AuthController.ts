@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import User from "../models/User";
-import { hashPassword } from "../utils/auth";
+import { checkPassword, hashPassword } from "../utils/auth";
 import Token from "../models/Token";
 import { generateToken } from "../utils/token";
 import { AuthEmail } from "../emails/AuthEmail";
