@@ -163,4 +163,37 @@ export class AuthController {
             });
         }
     };
+
+    static forgotPassword = async (req: Request, res: Response) => {
+        try {
+            const { email } = req.body;
+
+            // User Exist
+            const user = await User.findOne({ email });
+            if (!user) {
+                const error = new Error('El Usuario no está registrado');
+                return res.status(404).json({
+                    error: error.message
+                });
+            }
+
+            // Generate token   
+            const token = new Token();
+            token.token = generateToken();
+            token.user = user.id;
+            await token.save();
+
+            // Send Email
+            AuthEmail.sendPasswordResetToken({
+                email: user.email,
+                name: user.name,
+                token: token.token
+            });
+            res.send('Revisa tu email para instrucciones');
+        } catch (error) {
+            res.status(500).json({
+                error: 'Hubo un error'
+            });
+        }
+    };
 }
