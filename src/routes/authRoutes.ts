@@ -39,11 +39,11 @@ router.post('/login',
     AuthController.login
 );
 
-router.post('/request-code',
+router.post('/forgot-password',
     body('email')
         .isEmail().withMessage('Invalid Email'),
     handleInputErrors,
-    AuthController.requestConfirmationCode
+    AuthController.forgotPassword
 );
 
 export default router;
