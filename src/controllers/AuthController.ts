@@ -196,4 +196,25 @@ export class AuthController {
             });
         }
     };
+
+    static validateToken = async (req: Request, res: Response) => {
+        try {
+            const { token } = req.body;
+
+            const tokenExist = await Token.findOne({ token });
+
+            if (!tokenExist) {
+                const error = new Error('Token no válido');
+                return res.status(404).json({
+                    error: error.message
+                });
+            }
+
+            res.send('Token válido, define tu nueva contraseña');
+        } catch (error) {
+            res.status(500).json({
+                error: 'Hubo un error'
+            });
+        }
+    };
 }
