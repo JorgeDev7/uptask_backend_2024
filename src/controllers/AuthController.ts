@@ -217,4 +217,31 @@ export class AuthController {
             });
         }
     };
+
+    static updatePasswordWithToken = async (req: Request, res: Response) => {
+        try {
+            const { token } = req.params;
+            const { password } = req.body;
+
+            const tokenExist = await Token.findOne({ token });
+
+            if (!tokenExist) {
+                const error = new Error('Token no válido');
+                return res.status(404).json({
+                    error: error.message
+                });
+            }
+
+            const user = await User.findById(tokenExist.user);
+            user.password = await hashPassword(password);
+
+            await Promise.allSettled([user.save(), tokenExist.deleteOne()]);
+
+            res.send('La contraseña ha sido modificada correctamente');
+        } catch (error) {
+            res.status(500).json({
+                error: 'Hubo un error'
+            });
+        }
+    };
 }
