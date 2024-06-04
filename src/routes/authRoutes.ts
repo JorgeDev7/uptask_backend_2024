@@ -46,11 +46,19 @@ router.post('/forgot-password',
     AuthController.forgotPassword
 );
 
-router.post('/validate-token',
-    body('token')
-        .notEmpty().withMessage('Token cannot be empty'),
+router.post('/update-password/:token',
+    param('token').notEmpty().isNumeric().withMessage('Invalid Token'),
+    body('password')
+        .isLength({ min: 8 }).withMessage('Password must be at least 8 characters long'),
+    body('password_confirmation')
+        .custom((value, { req }) => {
+            if (value !== req.body.password) {
+                throw new Error('Passwords do not match');
+            }
+            return true;
+        }),
     handleInputErrors,
-    AuthController.validateToken
+    AuthController.updatePasswordWithToken
 );
 
 export default router;
