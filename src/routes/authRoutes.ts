@@ -46,6 +46,13 @@ router.post('/forgot-password',
     AuthController.forgotPassword
 );
 
+router.post('/validate-token',
+    body('token')
+        .notEmpty().withMessage('Token cannot be empty'),
+    handleInputErrors,
+    AuthController.validateToken
+);
+
 router.post('/update-password/:token',
     param('token').notEmpty().isNumeric().withMessage('Invalid Token'),
     body('password')
