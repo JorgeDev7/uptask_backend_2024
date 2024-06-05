@@ -22,7 +22,11 @@ export class ProjectController {
     static getAllProject = async (req: Request, res: Response) => {
 
         try {
-            const projects = await Project.find({});
+            const projects = await Project.find({
+                $or: [
+                    { manager: { $in: req.user.id } } //condition to get only the projects of the current user
+                ]
+            });
             res.json(projects);
         } catch (error) {
             console.log(error);
