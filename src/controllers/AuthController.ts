@@ -114,7 +114,8 @@ export class AuthController {
                 });
             }
 
-            res.send("Autenticado...");
+            const token = generateJWT({ id: user.id });
+            res.send(token);
 
         } catch (error) {
             res.status(500).json({
