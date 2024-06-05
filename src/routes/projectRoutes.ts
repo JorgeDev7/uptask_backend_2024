@@ -5,11 +5,12 @@ import { projectExists } from '../middleware/project';
 import { ProjectController } from '../controllers/ProjectController';
 import { TaskController } from '../controllers/TaskController';
 import { taskBelongsToProject, taskExists } from '../middleware/task';
+import { authenticate } from '../middleware/auth';
 
 const router = Router();
 
 router.post('/',
-
+    authenticate,
     body('projectName')
         .notEmpty().withMessage('Project Name is required'),
 
