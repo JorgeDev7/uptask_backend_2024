@@ -8,6 +8,9 @@ export class ProjectController {
 
         const project = new Project(req.body);
 
+        // set a manager
+        project.manager = req.user.id;
+
         try {
             await project.save();
             res.send('Proyecto Creado Correctamente');
