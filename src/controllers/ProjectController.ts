@@ -74,6 +74,13 @@ export class ProjectController {
                 });
             }
 
+            if (project.manager.toString() !== req.user.id.toString()) {
+                const error = new Error('Solo el Manager puede actualizar un Proyecto');
+                return res.status(404).json({
+                    error: error.message
+                });
+            }
+
             project.projectName = req.body.projectName;
             project.clientName = req.body.clientName;
             project.description = req.body.description;
@@ -95,6 +102,13 @@ export class ProjectController {
 
             if (!project) {
                 const error = new Error('Proyecto no encontrado');
+                return res.status(404).json({
+                    error: error.message
+                });
+            }
+
+            if (project.manager.toString() !== req.user.id.toString()) {
+                const error = new Error('Solo el Manager puede eliminar un Proyecto');
                 return res.status(404).json({
                     error: error.message
                 });
