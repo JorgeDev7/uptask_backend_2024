@@ -116,19 +116,19 @@ router.post('/:projectId/team/find',
     TeamMemberController.findMemberByEmail
 );
 
-router.get('/:projectId/team/',
+router.get('/:projectId/team',
     TeamMemberController.getProjectTeam
 );
 
-router.post('/:projectId/team/',
+router.post('/:projectId/team',
     body('id')
         .isMongoId().withMessage('Invalid ID'),
     handleInputErrors,
     TeamMemberController.addMemberById
 );
 
-router.delete('/:projectId/team/',
-    body('id')
+router.delete('/:projectId/team/:userId',
+    param('userId')
         .isMongoId().withMessage('Invalid ID'),
     handleInputErrors,
     TeamMemberController.removeMemberById
