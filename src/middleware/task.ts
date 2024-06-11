@@ -38,3 +38,13 @@ export async function taskBelongsToProject(req: Request, res: Response, next: Ne
     }
     next();
 }
+
+export async function hasAuthorization(req: Request, res: Response, next: NextFunction) {
+    if (req.user.id.toString() !== req.project.manager.toString()) {
+        const error = new Error('Acción inválida');
+        return res.status(400).json({
+            error: error.message
+        });
+    }
+    next();
+}
