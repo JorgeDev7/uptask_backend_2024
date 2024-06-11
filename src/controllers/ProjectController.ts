@@ -24,7 +24,8 @@ export class ProjectController {
         try {
             const projects = await Project.find({
                 $or: [
-                    { manager: { $in: req.user.id } } //condition to get only the projects of the current user
+                    { manager: { $in: req.user.id } }, //condition to get only the projects of the current user
+                    { team: { $in: req.user.id } } // Condition to show all projects to users who are part of the project team.
                 ]
             });
             res.json(projects);
@@ -47,7 +48,7 @@ export class ProjectController {
                 });
             }
 
-            if (project.manager.toString() !== req.user.id.toString()) {
+            if (project.manager.toString() !== req.user.id.toString() && !project.team.includes(req.user.id)) {
                 const error = new Error('Acción no válida');
                 return res.status(404).json({
                     error: error.message
