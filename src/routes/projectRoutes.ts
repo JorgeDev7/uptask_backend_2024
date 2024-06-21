@@ -24,7 +24,6 @@ router.post('/',
         .notEmpty().withMessage('Description is required'),
 
     handleInputErrors,
-
     ProjectController.createProject
 );
 router.get('/', ProjectController.getAllProject);
@@ -34,8 +33,11 @@ router.get('/:id',
     ProjectController.getProjectById
 );
 
-router.put('/:id',
-    param('id').isMongoId().withMessage('Invalid ID'),
+// Validates the param on an endpoint, callback => function tha validates
+router.param('projectId', projectExists);
+
+router.put('/:projectId',
+    param('projectId').isMongoId().withMessage('Invalid ID'),
     body('projectName')
         .notEmpty().withMessage('Project Name is required'),
 
@@ -46,20 +48,18 @@ router.put('/:id',
         .notEmpty().withMessage('Description is required'),
 
     handleInputErrors,
+    hasAuthorization,
     ProjectController.updatedProject
 );
 
-router.delete('/:id',
-    param('id').isMongoId().withMessage('Invalid ID'),
+router.delete('/:projectId',
+    param('projectId').isMongoId().withMessage('Invalid ID'),
     handleInputErrors,
+    hasAuthorization,
     ProjectController.deleteProject
 );
 
-
 // * Routes for tasks
-// Validates the param on an endpoint, callback => function tha validates
-router.param('projectId', projectExists);
-
 router.post('/:projectId/tasks',
     hasAuthorization,
     body('name')
